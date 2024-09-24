@@ -1,14 +1,11 @@
-package JavaProject;
+package our.project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-public class InputUser {
+public class Application {
 
     private Scanner scanner = new Scanner(System.in);
     private List listOfAnimals = new ArrayList<>();
@@ -16,8 +13,8 @@ public class InputUser {
     private List listOfBarrels = new ArrayList<>();
     Random random = new Random();
 
-    // исправить ввести sout на то чтобы ввел цифры при выборе главного меню
-    public void inputNumder() {
+
+    public void run() {
         boolean exit = false;
 
         while (!exit) {
@@ -56,6 +53,8 @@ public class InputUser {
                 System.out.println(e.getMessage());
             } catch (FileNotFoundException e) {
                 System.out.println("Файл не найден.");
+            } catch (NoSuchElementException e) {
+                System.out.println("Введенная длинна массива превышает количество элементов в файле.");
             }
         }
     }
@@ -168,8 +167,6 @@ public class InputUser {
         }
         int path = scanner.nextInt();
 
-        // обработать при указании длины массива в файле меньше обектов -- - - ОШИБКА
-
         if (path > 0 && path < 4) {
             switch (path) {
                 case 1: {
@@ -219,7 +216,7 @@ public class InputUser {
         }
     }
 
-    private void createObjectHumanFromFile() throws FileNotFoundException, UserInputException {
+    private void createObjectHumanFromFile() throws FileNotFoundException, UserInputException{
         int arraySize = inputLengthArray();
         URL url = getClass().getResource("Human.txt");
         File file = new File(url.getPath());
