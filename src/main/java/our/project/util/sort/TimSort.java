@@ -1,4 +1,4 @@
-package org.javaProject.util.sort;
+package our.project.util.sort;
 
 import java.util.Comparator;
 
