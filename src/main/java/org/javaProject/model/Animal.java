@@ -62,9 +62,9 @@ public class Animal implements Comparable<Animal>{
 
     @Override
     public int compareTo(Animal o) {
-        return Comparator.comparing(Animal::getType)
-                .thenComparing(Animal::getEyeColor)
-                .thenComparing(Animal::isHasFur).compare(this,o);
+        return Comparator.comparing(Animal::getType, Comparator.naturalOrder())
+                .thenComparing(Animal::getEyeColor, Comparator.naturalOrder())
+                .thenComparing(Animal::isHasFur, Comparator.naturalOrder()).compare(this,o);
     }
 
     @Override

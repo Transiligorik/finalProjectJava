@@ -14,6 +14,15 @@ public class Person implements Comparable<Person>{
         gender = personBuilder.gender;
     }
 
+    public Person(int age, String lastName, Gender gender) {
+        this.age = age;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
+
+    public Person() {
+    }
+
     public int getAge() {
         return age;
     }
@@ -53,9 +62,9 @@ public class Person implements Comparable<Person>{
 
     @Override
     public int compareTo(Person o) {
-        return Comparator.comparing(Person::getAge)
-                .thenComparing(Person::getLastName)
-                .thenComparing(Person::getGender).compare(this,o);
+        return Comparator.comparingInt(Person::getAge)
+                .thenComparing(Person::getLastName, Comparator.naturalOrder())
+                .thenComparing(Person::getGender, Comparator.naturalOrder()).compare(this,o);
     }
 
     @Override

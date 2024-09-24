@@ -14,6 +14,15 @@ public class Barrel implements Comparable<Barrel>{
         barrelMaterial = barrelBuilder.barrelMaterial;
     }
 
+    public Barrel(long volume, String content, String barrelMaterial) {
+        this.volume = volume;
+        this.content = content;
+        this.barrelMaterial = barrelMaterial;
+    }
+
+    public Barrel() {
+    }
+
     public long getVolume() {
         return volume;
     }
@@ -53,9 +62,9 @@ public class Barrel implements Comparable<Barrel>{
 
     @Override
     public int compareTo(Barrel o) {
-        return Comparator.comparing(Barrel::getVolume)
-                .thenComparing(Barrel::getContent)
-                .thenComparing(Barrel::getBarrelMaterial).compare(this,o);
+        return Comparator.comparingLong(Barrel::getVolume)
+                .thenComparing(Barrel::getContent, Comparator.naturalOrder())
+                .thenComparing(Barrel::getBarrelMaterial, Comparator.naturalOrder()).compare(this,o);
     }
 
     @Override
