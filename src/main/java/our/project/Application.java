@@ -1,5 +1,7 @@
 package our.project;
 
+import our.project.exception.UserInputException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;

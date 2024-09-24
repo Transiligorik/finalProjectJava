@@ -1,4 +1,4 @@
-package our.project;
+package our.project.exception;
 
 public class UserInputException extends Exception {
 
