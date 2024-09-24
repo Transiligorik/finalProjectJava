@@ -1,4 +1,4 @@
-package org.javaProject.model;
+package our.project.model;
 
 public interface HasFieldForEvenSort {
     int getFieldForEvenSort();
