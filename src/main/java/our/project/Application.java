@@ -1,6 +1,13 @@
 package our.project;
 
 import our.project.exception.UserInputException;
+import our.project.model.Animal;
+import our.project.model.Barrel;
+import our.project.model.Gender;
+import our.project.model.Person;
+import our.project.util.BinarySearchUtil;
+import our.project.util.RandomDataGenerator;
+import our.project.util.SortUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +17,9 @@ import java.util.*;
 public class Application {
 
     private Scanner scanner = new Scanner(System.in);
-    private List listOfAnimals = new ArrayList<>();
-    private List listOfHumans = new ArrayList<>();
-    private List listOfBarrels = new ArrayList<>();
+    private List<Animal> animals = new ArrayList<>();
+    private List<Person> people = new ArrayList<>();
+    private List<Barrel> barrels = new ArrayList<>();
     Random random = new Random();
 
 
@@ -154,7 +161,7 @@ public class Application {
     }
 
     private void showMenuChoice() {
-        System.out.println("Выберите какой объект необходимо добавить в массив :");
+        System.out.println("Выберите c каким типом объекта Вы хотите работать:");
         System.out.println();
         System.out.println("Введите 1, если хотите выбрать объект 'Животное'.");
         System.out.println("Введите 2, если хотите выбрать объект 'Бочка'.");
@@ -172,18 +179,21 @@ public class Application {
         if (path > 0 && path < 4) {
             switch (path) {
                 case 1: {
-                    createObjectAnimalFromFile();
-                    System.out.println(listOfAnimals);
+                    fillAnimalsFromFile();
+                    SortUtil.sort(animals);
+                    System.out.println(animals);
                     break;
                 }
                 case 2: {
-                    createObjectBarrelFromFile();
-                    System.out.println(listOfBarrels);
+                    fillBarrelsFromFile();
+                    SortUtil.sort(barrels);
+                    System.out.println(barrels);
                     break;
                 }
                 case 3: {
-                    createObjectHumanFromFile();
-                    System.out.println(listOfHumans);
+                    fillPersonsFromFile();
+                    SortUtil.sort(people);
+                    System.out.println(people);
                     break;
                 }
             }
@@ -192,42 +202,48 @@ public class Application {
         }
     }
 
-    private void createObjectAnimalFromFile() throws FileNotFoundException, UserInputException {
+    private void fillAnimalsFromFile() throws FileNotFoundException, UserInputException {
+        animals.clear();
         int arraySize = inputLengthArray();
         URL url = getClass().getResource("Animal.txt");
         File file = new File(url.getPath());
         Scanner scannerFromFile = new Scanner(file);
         for (int i = 0; i < arraySize; i++) {
-            String typeAnaimalFromFile = scannerFromFile.next();
-            String typeColorFromFile = scannerFromFile.next();
-            Boolean haveWoolFromFile = scannerFromFile.nextBoolean();
-            listOfAnimals.addAll(List.of(typeAnaimalFromFile, typeColorFromFile, haveWoolFromFile));
+            animals.add(Animal.builder()
+                    .setType(scannerFromFile.next())
+                    .setEyeColor(scannerFromFile.next())
+                    .setHasFur(scannerFromFile.nextBoolean())
+                    .build());
         }
     }
 
-    private void createObjectBarrelFromFile() throws FileNotFoundException, UserInputException {
+    private void fillBarrelsFromFile() throws FileNotFoundException, UserInputException {
+        barrels.clear();
         int arraySize = inputLengthArray();
         URL url = getClass().getResource("Barrel.txt");
         File file = new File(url.getPath());
         Scanner scannerFromFile = new Scanner(file);
         for (int i = 0; i < arraySize; i++) {
-            int volumeBarrelFromFile = scannerFromFile.nextInt();
-            String keepMaterialFromFile = scannerFromFile.next();
-            String materialFromWhichMadeFromFile = scannerFromFile.next();
-            listOfBarrels.addAll(List.of(volumeBarrelFromFile, keepMaterialFromFile, materialFromWhichMadeFromFile));
+            barrels.add(Barrel.builder()
+                    .setVolume(scannerFromFile.nextInt())
+                    .setContent(scannerFromFile.next())
+                    .setBarrelMaterial(scannerFromFile.next())
+                    .build());
         }
     }
 
-    private void createObjectHumanFromFile() throws FileNotFoundException, UserInputException{
+    private void fillPersonsFromFile() throws FileNotFoundException, UserInputException {
+        people.clear();
         int arraySize = inputLengthArray();
         URL url = getClass().getResource("Human.txt");
         File file = new File(url.getPath());
         Scanner scannerFromFile = new Scanner(file);
         for (int i = 0; i < arraySize; i++) {
-            int genderHumanFromFile = scannerFromFile.nextInt();
-            String ageHumanFromFile = scannerFromFile.next();
-            String SurnameHumanromFile = scannerFromFile.next();
-            listOfHumans.addAll(List.of(genderHumanFromFile, ageHumanFromFile, SurnameHumanromFile));
+            people.add(Person.builder()
+                    .setGender(Gender.get(scannerFromFile.next()))
+                    .setAge(scannerFromFile.nextInt())
+                    .setLastName(scannerFromFile.next())
+                    .build());
         }
     }
 
@@ -237,16 +253,16 @@ public class Application {
         switch (objectType) {
 
             case "Животное": {
-                createAnimalInManuallyArray();
+                fillAnimalsManually();
                 break;
             }
 
             case "Бочка": {
-                createBarrelInManuallyArray();
+                fillBarrelsManually();
                 break;
             }
             case "Человек": {
-                createHumanInManuallyArray();
+                fillsPersonsManually();
                 break;
             }
         }
@@ -258,139 +274,150 @@ public class Application {
         switch (randomChoice) {
             case 1: {
                 System.out.println("Сгенерирован выбор заполнения массива объектом 'Животное'.");
-                createAnimalRandomArray();
-                System.out.println(listOfAnimals);
+                fillAnimalsRandom();
+                SortUtil.sort(animals);
+                System.out.println(animals);
                 break;
             }
             case 2: {
                 System.out.println("Сгенерирован выбор заполнения массива объектом 'Бочка'.");
-                createBarrelRandomArray();
-                System.out.println(listOfBarrels);
+                fillBarrelsRandom();
+                SortUtil.sort(barrels);
+                System.out.println(barrels);
                 break;
             }
             case 3: {
                 System.out.println("Сгенерирован выбор заполнения массива объектом 'Человек'.");
-                createHumanRandomArray();
-                System.out.println(listOfHumans);
+                fillPersonsRandom();
+                SortUtil.sort(people);
+                System.out.println(people);
                 break;
             }
         }
     }
 
-    private void createAnimalInManuallyArray() throws UserInputException {
+    private void fillAnimalsManually() throws UserInputException {
+        animals.clear();
         int arraySize = inputLengthArray();
         for (int i = 1; i <= arraySize; i++) {
             System.out.println("Введите данные для животного номер " + i);
             System.out.println();
-            System.out.println("Введите тип животного: ");
-            String typeAnimal = scanner.next();
-            System.out.println("Введите цвет глаз :");
-            String colorsEyeAnimal = scanner.next();
-            System.out.println("Введите наличие шерсти ('true' / 'false') :");
-            if (!scanner.hasNextBoolean()) {
-                scanner.nextLine();
-                throw new UserInputException("Неправильный тип данных.");
-            }
-            Boolean haveWoolAnimal = scanner.nextBoolean();
-            listOfAnimals.add("Животное");
-
+            animals.add(createAnimalFromConsole());
         }
     }
 
-    private void createBarrelInManuallyArray() throws UserInputException {
-
+    private void fillBarrelsManually() throws UserInputException {
+        barrels.clear();
         int arraySize = inputLengthArray();
         for (int i = 1; i <= arraySize; i++) {
             System.out.println("Введите данные для бочки номер " + i);
             System.out.println();
-            System.out.println("Введите объем :");
-            int volumeBarrel = scanner.nextInt();
-            System.out.println("Введите хранимый материал :");
-            String keepMaterialBarrel = scanner.next();
-            System.out.println("Введите материал из которого она изготовлена :");
-            String materialFromWhichMadeBarrel = scanner.next();
-            listOfBarrels.add("Бочка");
+            barrels.add(createBarrelFromConsole());
         }
     }
 
-    private void createHumanInManuallyArray() throws UserInputException {
-
+    private void fillsPersonsManually() throws UserInputException {
+        people.clear();
         int arraySize = inputLengthArray();
         for (int i = 1; i <= arraySize; i++) {
             System.out.println("Введите данные для человека номер " + i);
             System.out.println();
-            System.out.println("Введите пол :");
-            String genderHuman = scanner.next();
-            System.out.println("Введите возраст :");
-            int ageHuman = scanner.nextInt();
-            System.out.println("Введите фамилию :");
-            String surnameHuman = scanner.next();
-            listOfHumans.add("Человек");
+            people.add(createPersonFromConsole());
         }
     }
 
-    private void createAnimalRandomArray() throws UserInputException {
-
+    private void fillAnimalsRandom() throws UserInputException {
+        animals.clear();
         int arraySize = inputLengthArray();
         for (int i = 0; i < arraySize; i++) {
-
-            String[] randomTypeAnimalArray = {"Енот", "Волк", "Жираф"};
-            int positionType = random.nextInt(randomTypeAnimalArray.length);
-            listOfAnimals.add(randomTypeAnimalArray[positionType]);
-
-            String[] randomcolorsEyeAnimalArray = {"Желтый", "Черный", "Серый"};
-            int positionColor = random.nextInt(randomcolorsEyeAnimalArray.length);
-            listOfAnimals.add(randomcolorsEyeAnimalArray[positionColor]);
-
-            Boolean[] randomHaveWoolArray = {true, false};
-            int positionHave = random.nextInt(randomHaveWoolArray.length);
-            listOfAnimals.add(randomHaveWoolArray[positionHave]);
+            animals.add(RandomDataGenerator.getRandomAnimal());
         }
     }
 
-    private void createBarrelRandomArray() throws UserInputException {
-
+    private void fillBarrelsRandom() throws UserInputException {
+        barrels.clear();
         int arraySize = inputLengthArray();
         for (int i = 0; i < arraySize; i++) {
-
-            int randomVolumeBarrel = random.nextInt(100);
-            listOfBarrels.add(randomVolumeBarrel);
-
-            String[] randomKeepMaterialBarrelArray = {"Кофе", "Чай", "Рис"};
-            int positionKeep = random.nextInt(randomKeepMaterialBarrelArray.length);
-            listOfBarrels.add(randomKeepMaterialBarrelArray[positionKeep]);
-
-            String[] randomMaterialFromWhichMadeBarrel = {"Дерево", "Металл", "Пластмасса"};
-            int positionMaterial = random.nextInt(randomMaterialFromWhichMadeBarrel.length);
-            listOfBarrels.add(randomMaterialFromWhichMadeBarrel[positionMaterial]);
+            barrels.add(RandomDataGenerator.getRandomBarrel());
         }
     }
 
-    private void createHumanRandomArray() throws UserInputException {
-
+    private void fillPersonsRandom() throws UserInputException {
+        people.clear();
         int arraySize = inputLengthArray();
         for (int i = 0; i < arraySize; i++) {
-
-            String[] randomGenderHumanArray = {"Мужской", "Женский"};
-            int positionGender = random.nextInt(randomGenderHumanArray.length);
-            listOfHumans.add(randomGenderHumanArray[positionGender]);
-
-            int randomAgeHuman = random.nextInt(100);
-            listOfHumans.add(randomAgeHuman);
-
-            String[] randomSurnameHuman = {"Иванов", "Смирнов", "Сидоров"};
-            int positionSurname = random.nextInt(randomSurnameHuman.length);
-            if (randomGenderHumanArray[positionGender] == "Женский") {
-                listOfHumans.add(randomSurnameHuman[positionSurname] + "a");
-            } else {
-                listOfHumans.add(randomSurnameHuman[positionSurname]);
-            }
+            people.add(RandomDataGenerator.getRandomPerson());
         }
     }
 
     private void searchElement() throws UserInputException {
         System.out.println();
         System.out.println("Вы выбрали опцию поиск элемента.");
-        chooseObjectType();
+        String objectType = chooseObjectType();
+        int elementPosition = -1;
+        switch (objectType) {
+
+            case "Животное": {
+                elementPosition = BinarySearchUtil.binarySearch(animals, createAnimalFromConsole());
+                break;
+            }
+
+            case "Бочка": {
+                elementPosition = BinarySearchUtil.binarySearch(barrels, createBarrelFromConsole());
+                break;
+            }
+            case "Человек": {
+                elementPosition = BinarySearchUtil.binarySearch(people, createPersonFromConsole());
+                break;
+            }
+        }
+        System.out.println(elementPosition == -1 ? "Объект не найден." :
+                "Позиция объекта в списке после сортировки: " + elementPosition);;
+    }
+
+    private Animal createAnimalFromConsole() throws UserInputException {
+        System.out.println("Введите тип животного: ");
+        String type = scanner.next();
+        System.out.println("Введите цвет глаз :");
+        String eyeColor = scanner.next();
+        System.out.println("Введите наличие шерсти ('true' / 'false') :");
+        if (!scanner.hasNextBoolean()) {
+            scanner.nextLine();
+            throw new UserInputException("Неправильный тип данных.");
+        }
+        boolean hasFur = scanner.nextBoolean();
+        return Animal.builder()
+                .setType(type)
+                .setEyeColor(eyeColor)
+                .setHasFur(hasFur)
+                .build();
+    }
+
+    private Barrel createBarrelFromConsole() throws UserInputException {
+        System.out.println("Введите объем :");
+        int volume = scanner.nextInt();
+        System.out.println("Введите хранимый материал :");
+        String content = scanner.next();
+        System.out.println("Введите материал из которого она изготовлена :");
+        String madeFrom = scanner.next();
+        return Barrel.builder()
+                .setVolume(volume)
+                .setBarrelMaterial(madeFrom)
+                .setContent(content)
+                .build();
+    }
+
+    private Person createPersonFromConsole() throws UserInputException {
+        System.out.println("Введите пол :");
+        String gender = scanner.next();
+        System.out.println("Введите возраст :");
+        int age = scanner.nextInt();
+        System.out.println("Введите фамилию :");
+        String lastName = scanner.next();
+        return Person.builder()
+                .setAge(age)
+                .setLastName(lastName)
+                .setGender(Gender.get(gender))
+                .build();
     }
 }

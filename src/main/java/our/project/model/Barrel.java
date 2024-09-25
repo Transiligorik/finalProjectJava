@@ -3,7 +3,7 @@ package our.project.model;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Barrel implements Comparable<Barrel>{
+public class Barrel implements Comparable<Barrel>, HasFieldForEvenSort{
     private long volume;
     private String content;
     private String barrelMaterial;
@@ -78,6 +78,11 @@ public class Barrel implements Comparable<Barrel>{
 
     public static BarrelBuilder builder(){
         return new BarrelBuilder();
+    }
+
+    @Override
+    public long getFieldForEvenSort() {
+        return volume;
     }
 
     public static class BarrelBuilder{

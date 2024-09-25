@@ -3,7 +3,7 @@ package our.project.model;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Person implements Comparable<Person>{
+public class Person implements Comparable<Person>, HasFieldForEvenSort{
     private int age;
     private String lastName;
     private Gender gender;
@@ -78,6 +78,11 @@ public class Person implements Comparable<Person>{
 
     public static PersonBuilder builder(){
         return new PersonBuilder();
+    }
+
+    @Override
+    public long getFieldForEvenSort() {
+        return age;
     }
 
     public static class PersonBuilder{

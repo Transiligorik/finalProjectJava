@@ -30,7 +30,7 @@ public final class SortUtil {
                 .filter(o -> o.getFieldForEvenSort() % 2 != 0)
                 .collect(Collectors.toMap(list::indexOf, o -> o ));
         list.removeIf(t -> t.getFieldForEvenSort() % 2 != 0);
-        sort(list, Comparator.comparing(HasFieldForEvenSort::getFieldForEvenSort));
+        sort(list, Comparator.comparingLong(HasFieldForEvenSort::getFieldForEvenSort));
         map.forEach(list::add);
     }
 
