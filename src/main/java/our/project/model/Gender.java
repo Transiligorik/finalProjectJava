@@ -1,4 +1,4 @@
-package org.javaProject.model;
+package main.java.our.project.model;
 
 public enum Gender {
     MALE,
