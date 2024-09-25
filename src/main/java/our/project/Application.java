@@ -1,6 +1,6 @@
-package our.project;
+package main.java.our.project;
 
-import our.project.exception.UserInputException;
+import main.java.our.project.exception.UserInputException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
