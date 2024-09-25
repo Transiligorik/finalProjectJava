@@ -1,4 +1,4 @@
-package our.project.model;
+package main.java.our.project.model;
 
 import java.util.Comparator;
 import java.util.Objects;

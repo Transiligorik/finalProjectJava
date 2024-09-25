@@ -1,4 +1,4 @@
-package our.project.util.sort;
+package main.java.our.project.util.sort;
 
 
 public class ComparableTimSort {

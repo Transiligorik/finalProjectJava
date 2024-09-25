@@ -1,13 +1,15 @@
-package our.project;
+package main.java.our.project;
 
-import our.project.exception.UserInputException;
-import our.project.model.Animal;
-import our.project.model.Barrel;
-import our.project.model.Gender;
-import our.project.model.Person;
-import our.project.util.BinarySearchUtil;
-import our.project.util.RandomDataGenerator;
-import our.project.util.SortUtil;
+
+import main.java.our.project.exception.UserInputException;
+import main.java.our.project.util.SortUtil;
+import main.java.our.project.model.Animal;
+import main.java.our.project.model.Barrel;
+import main.java.our.project.model.Gender;
+import main.java.our.project.model.Person;
+import main.java.our.project.util.BinarySearchUtil;
+import main.java.our.project.util.RandomDataGenerator;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
