@@ -1,8 +1,8 @@
-package main.java.our.project.util;
+package our.project.util;
 
-import main.java.our.project.model.HasFieldForEvenSort;
-import main.java.our.project.util.sort.ComparableTimSort;
-import main.java.our.project.util.sort.TimSort;
+import our.project.model.HasFieldForEvenSort;
+import our.project.util.sort.ComparableTimSort;
+import our.project.util.sort.TimSort;
 
 
 import java.util.Comparator;

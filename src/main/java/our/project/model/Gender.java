@@ -1,4 +1,4 @@
-package main.java.our.project.model;
+package our.project.model;
 
 import java.util.Collections;
 import java.util.Map;

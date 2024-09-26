@@ -1,9 +1,9 @@
-package main.java.our.project.util;
+package our.project.util;
 
-import main.java.our.project.model.Animal;
-import main.java.our.project.model.Barrel;
-import main.java.our.project.model.Gender;
-import main.java.our.project.model.Person;
+import our.project.model.Animal;
+import our.project.model.Barrel;
+import our.project.model.Gender;
+import our.project.model.Person;
 
 import java.util.Random;
 

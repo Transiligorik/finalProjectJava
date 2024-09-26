@@ -1,4 +1,4 @@
-package main.java.our.project.util;
+package our.project.util;
 
 import java.util.List;
 import java.util.ListIterator;
